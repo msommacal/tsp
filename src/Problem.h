@@ -9,6 +9,7 @@ class Problem {
     private:
 
     std::vector<std::vector<double>> m_data;
+    int m_size;
 
     public:
 
@@ -17,6 +18,7 @@ class Problem {
     ~Problem();
 
     std::vector<std::vector<double>> getData();
+    int getSize();
 
     double objective(Solution &x);
     //Solution solve();

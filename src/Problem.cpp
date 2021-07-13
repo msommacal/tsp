@@ -3,7 +3,8 @@
 using namespace std;
 
 Problem::Problem(vector<vector<double>> data)
-  : m_data(data) {}
+  : m_data(data),
+    m_size(data.size()) {}
 
 Problem::Problem(string filename) {
     ifstream file(filename);
@@ -24,10 +25,19 @@ Problem::Problem(string filename) {
     }
 
     m_data = data;
+    m_size = n;
 }
 
 Problem::~Problem() {
     // todo
+}
+
+vector<vector<double>> Problem::getData() {
+    return m_data;
+}
+
+int Problem::getSize() {
+    return m_size;
 }
 
 double Problem::objective(Solution &x) {

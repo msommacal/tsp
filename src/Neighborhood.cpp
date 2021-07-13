@@ -22,8 +22,8 @@ Solution Neighborhood::inversionMove(Solution x, int a, int b) {
 }
 
 Solution Neighborhood::scrambleMove(Solution x, int a, int b) {
-    std::random_device rd;
-    std::default_random_engine rng(rd());
+    random_device rd;
+    default_random_engine rng(rd());
 
     Solution x_neighbor(x);
     vector<int> x_data = x.getData();

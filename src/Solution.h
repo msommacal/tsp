@@ -1,8 +1,10 @@
 #ifndef SOLUTION
 #define SOLUTION
 
-#include <limits>
+#include <algorithm>
 #include <iostream>
+#include <limits>
+#include <random>
 #include <vector>
 
 class Solution {
@@ -13,6 +15,7 @@ class Solution {
 
     public:
 
+    Solution(int size);
     Solution(std::vector<int> data);
     ~Solution();
 
