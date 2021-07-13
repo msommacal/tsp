@@ -5,6 +5,27 @@ using namespace std;
 Problem::Problem(vector<vector<double>> data)
   : m_data(data) {}
 
+Problem::Problem(string filename) {
+    ifstream file(filename);
+    vector<vector<double>> data;
+    vector<double> line;
+
+    int n;
+    double v;
+
+    file >> n;
+    for (int i=0;i<n;i++) {
+        line.clear();
+        for (int j=0;j<n;j++) {
+            file >> v;
+            line.push_back(v);
+        }
+        data.push_back(line);
+    }
+
+    m_data = data;
+}
+
 Problem::~Problem() {
     // todo
 }
