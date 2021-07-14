@@ -8,16 +8,23 @@
 
 using namespace std;
 
-/**
- * \brief Petite fonction
- */
+Solution temp(Solution x, int a, int b) {
+    Solution x_neighbor(x);
+
+    for (int i=a;i<=b;i++) {
+        x_neighbor.setData(i, x.getData((b+a)-i));
+    }
+
+    return x_neighbor;
+}
+
 void printVector(vector<Solution> s) {
     for (int i=0;i<s.size();i++) {
         s.at(i).print();
     }
 }
 
-int main() {
+int main(int argc, char** argv) {
     vector<vector<double>> data {
         {0,  20, 25, 30, 40, 35},
         {20,  0, 10, 15, 40, 50},
@@ -27,18 +34,52 @@ int main() {
         {35, 50, 35, 30, 15,  0}
     };
 
+    //string filename = "/home/msommacal/Documents/projets/tsp/data/data.txt";
+
+    /*
+    if (argc == 1) {
+        cerr << "Error: file argument is missing." << endl;
+        exit(1);
+    }
+
+    string filename = argv[1];*/
+
     Problem p(data);
 
-    Solution x({1,3,2,4,0});
+    Solution x(p.getSize());
+
+    Neighborhood neighborhood();
+
+    //Solution y = Algorithm().localSearch(p, x);
 
     vector<Solution> x_opti = Algorithm().bruteforce(p);
 
-    //temp(x_opti);
+    cout << "--------------------" << endl;
 
-    Solution x_n = Neighborhood().scrambleMove(x, 1, 3);
+    printVector(x_opti);
+
+    cout << "--------------------" << endl;
+
+    Solution y = Algorithm().simulatedAnnealing(p, x);
+    //Solution y = Algorithm().variableNeighborhoodSearch(p, x);
 
     x.print();
-    x_n.print();
+    y.print();
+
+    /*Problem p(data);
+
+    Problem p(data/data.txt);
+
+    Solution x({1,3,2,4,0});
+
+    vector<Solution> x_opti = Algorithm().bruteforce(p);*/
+
+    //temp(x_opti);
+
+    //Solution x_n = Neighborhood().scrambleMove(x, 1, 3);
+
+    //x.print();
+    //x_n.print();
 
     //Algorithm a;
 

@@ -12,9 +12,11 @@ class Solution {
 
     std::vector<int> m_data;
     double m_eval;
+    int m_size;
 
     public:
 
+    Solution();
     Solution(int size);
     Solution(std::vector<int> data);
     ~Solution();
@@ -25,6 +27,7 @@ class Solution {
     void setData(int i, int value);
     double getEval();
     void setEval(double eval);
+    int getSize();
 
     void print();
 };

@@ -2,6 +2,8 @@
 
 using namespace std;
 
+Solution::Solution() {}
+
 Solution::Solution(int size) {
     random_device rd;
     default_random_engine rng(rd());
@@ -15,11 +17,13 @@ Solution::Solution(int size) {
 
     m_data = data;
     m_eval = numeric_limits<double>::quiet_NaN();
+    m_size = data.size();
 }
 
 Solution::Solution(vector<int> data)
   : m_data(data),
-    m_eval(numeric_limits<double>::quiet_NaN()) {}
+    m_eval(numeric_limits<double>::quiet_NaN()),
+    m_size(data.size()) {}
 
 Solution::~Solution() {
     // todo
@@ -35,6 +39,7 @@ double Solution::getData(int i) {
 
 void Solution::setData(vector<int> data) {
     m_data = data;
+    m_size = data.size();
 }
 
 void Solution::setData(int i, int value) {
@@ -47,6 +52,10 @@ double Solution::getEval() {
 
 void Solution::setEval(double eval) {
     m_eval = eval;
+}
+
+int Solution::getSize() {
+    return m_size;
 }
 
 void Solution::print() {
