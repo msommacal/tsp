@@ -41,11 +41,38 @@ Solution Algorithm::localSearch(Problem p, Solution x) {
     int a,b;
     for (a=0;a<x.getSize();a++) {
         for (b=a+1;b<x.getSize();b++) {
-            x_neighbor = Neighborhood().scrambleMove(x, a, b);
+            x_neighbor = Neighborhood().swapMove(x, a, b);
             p.objective(x_neighbor);
 
             if (x_neighbor.getEval() < x_optim.getEval()) {
                 x_optim = x_neighbor;
+            }
+        }
+    }
+
+    return x_optim;
+}
+
+Solution Algorithm::localSearch(Problem p, Solution x, vector<Solution> T) {
+    Solution x_neighbor;
+    Solution x_optim = x;
+    p.objective(x_optim);
+
+    int a,b;
+    for (a=0;a<x.getSize();a++) {
+        for (b=a+1;b<x.getSize();b++) {
+            x_neighbor = Neighborhood().swapMove(x, a, b);
+            p.objective(x_neighbor);
+
+            int i = 0;
+            while (i < T.size() && (T.at(i) != x_neighbor)) {
+                i++;
+            }
+
+            if (i == T.size()) {
+                if ((x_optim == x) || (x_neighbor.getEval() < x_optim.getEval())) {
+                    x_optim = x_neighbor;
+                }
             }
         }
     }
@@ -157,5 +184,24 @@ Solution Algorithm::variableNeighborhoodSearch(Problem p, Solution x) {
     }
 
     return x_optim;
+}
 
+Solution Algorithm::tabuSearch(Problem p, Solution x) {
+    Solution x_init = x;
+    Solution x_optim = x;
+    p.objective(x_optim);
+    vector<Solution> T;
+
+    Solution x_neighbor;
+
+    for (int i=0;i<5;i++) {
+        x_neighbor = localSearch(p,x_init,T);
+        if (x_neighbor.getEval() < x_optim.getEval()) {
+            x_optim = x_neighbor;
+        }
+        x_init = x_neighbor;
+        T.push_back(x_neighbor);
+    }
+
+    return x_optim;
 }

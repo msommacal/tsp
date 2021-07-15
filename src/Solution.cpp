@@ -29,11 +29,11 @@ Solution::~Solution() {
     // todo
 }
 
-vector<int> Solution::getData() {
+vector<int> Solution::getData() const {
     return m_data;
 }
 
-double Solution::getData(int i) {
+double Solution::getData(int i) const {
     return m_data.at(i);
 }
 
@@ -46,7 +46,7 @@ void Solution::setData(int i, int value) {
     m_data.at(i) = value;
 }
 
-double Solution::getEval() {
+double Solution::getEval() const {
     return m_eval;
 }
 
@@ -54,7 +54,7 @@ void Solution::setEval(double eval) {
     m_eval = eval;
 }
 
-int Solution::getSize() {
+int Solution::getSize() const {
     return m_size;
 }
 
@@ -64,4 +64,12 @@ void Solution::print() {
         cout << m_data.at(i) << ' ';
     }
     cout << endl;
+}
+
+bool Solution::operator==(const Solution &an) const {
+    return this->getData() == an.getData();
+}
+
+bool Solution::operator!=(const Solution &an) const {
+    return this->getData() != an.getData();
 }

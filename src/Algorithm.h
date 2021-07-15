@@ -21,8 +21,11 @@ class Algorithm {
 
     std::vector<Solution> bruteforce(Problem p);
     Solution localSearch(Problem p, Solution x);
+    Solution localSearch(Problem p, Solution x, std::vector<Solution> T);
     Solution simulatedAnnealing(Problem p, Solution x);
     Solution variableNeighborhoodSearch(Problem p, Solution x);
+    Solution tabuSearch(Problem p, Solution x);
 };
+
 
 #endif
