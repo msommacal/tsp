@@ -22,7 +22,7 @@ class Solution {
     ~Solution();
 
     std::vector<int> getData() const;
-    double getData(int i) const;
+    int getData(int i) const;
     void setData(std::vector<int> data);
     void setData(int i, int value);
     double getEval() const;
@@ -33,6 +33,7 @@ class Solution {
 
     bool operator==(const Solution& an) const;
     bool operator!=(const Solution& an) const;
+    bool operator<(const Solution& an) const;
 };
 
 #endif

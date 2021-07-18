@@ -25,7 +25,7 @@ class Algorithm {
     Solution simulatedAnnealing(Problem p, Solution x);
     Solution variableNeighborhoodSearch(Problem p, Solution x);
     Solution tabuSearch(Problem p, Solution x);
+    Solution geneticAlgorithm(Problem p, int n, int mu);
 };
-
 
 #endif

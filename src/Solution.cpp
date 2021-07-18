@@ -33,7 +33,7 @@ vector<int> Solution::getData() const {
     return m_data;
 }
 
-double Solution::getData(int i) const {
+int Solution::getData(int i) const {
     return m_data.at(i);
 }
 
@@ -72,4 +72,8 @@ bool Solution::operator==(const Solution &an) const {
 
 bool Solution::operator!=(const Solution &an) const {
     return this->getData() != an.getData();
+}
+
+bool Solution::operator<(const Solution& an) const {
+    return m_eval < an.m_eval;
 }

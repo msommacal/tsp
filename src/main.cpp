@@ -18,13 +18,13 @@ int main(int argc, char** argv) {
     Problem p(argv[1]);
 
     // Bruteforce
-    cout << "Bruteforce:" << endl;
-    vector<Solution> x_optim = Algorithm().bruteforce(p);
-    for (int i=0;i<x_optim.size();i++) {
-        cout << "  ";
-        x_optim.at(i).print();
-    }
-    cout << endl;
+    //cout << "Bruteforce:" << endl;
+    //vector<Solution> x_optim = Algorithm().bruteforce(p);
+    //for (int i=0;i<x_optim.size();i++) {
+    //    cout << "  ";
+    //    x_optim.at(i).print();
+    //}
+    //cout << endl;
 
     // generate a random solution
     cout << "Initial solution:" << endl << "  ";
@@ -51,6 +51,11 @@ int main(int argc, char** argv) {
     cout << "Tabu Search:" << endl << "  ";
     Solution y4 = Algorithm().tabuSearch(p, x);
     y4.print();
+
+    // Genetic Algorithm
+    cout << "Genetic Algorithm:" << endl << "  ";
+    Solution y5 = Algorithm().geneticAlgorithm(p, 30, 8);
+    y5.print();
 
     return 0;
 }
