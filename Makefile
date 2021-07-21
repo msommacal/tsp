@@ -1,6 +1,6 @@
 all:
 	if [ ! -d bin ]; then mkdir bin; fi
-	g++ src/*.cpp -o bin/tsp
+	g++ src/**/*.cpp src/*.cpp -o bin/tsp
 
 win:
 	if [ ! -d bin ]; then mkdir bin; fi

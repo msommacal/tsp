@@ -3,8 +3,12 @@
 #include <random>
 #include <vector>
 
-#include "Algorithm.h"
-#include "Neighborhood.h"
+#include "algorithm/Bruteforce.h"
+#include "algorithm/LocalSearch.h"
+#include "algorithm/SimulatedAnnealing.h"
+#include "algorithm/VariableNeighborhoodSearch.h"
+#include "algorithm/TabuSearch.h"
+#include "algorithm/GeneticAlgorithm.h"
 
 using namespace std;
 
@@ -18,13 +22,13 @@ int main(int argc, char** argv) {
     Problem p(argv[1]);
 
     // Bruteforce
-    //cout << "Bruteforce:" << endl;
-    //vector<Solution> x_optim = Algorithm().bruteforce(p);
-    //for (int i=0;i<x_optim.size();i++) {
-    //    cout << "  ";
-    //    x_optim.at(i).print();
-    //}
-    //cout << endl;
+    cout << "Bruteforce:" << endl;
+    vector<Solution> x_optim = Bruteforce().run(p);
+    for (int i=0;i<x_optim.size();i++) {
+        cout << "  ";
+        x_optim.at(i).print();
+    }
+    cout << endl;
 
     // generate a random solution
     cout << "Initial solution:" << endl << "  ";
@@ -34,27 +38,27 @@ int main(int argc, char** argv) {
 
     // Local Search
     cout << "Local Search:" << endl << "  ";
-    Solution y1 = Algorithm().localSearch(p, x);
+    Solution y1 = LocalSearch().run(p, x);
     y1.print();
 
     // Simulated Annealing
     cout << "Simulated Annealing:" << endl << "  ";
-    Solution y2 = Algorithm().simulatedAnnealing(p, x);
+    Solution y2 = SimulatedAnnealing().run(p, x);
     y2.print();
 
     // VNS
     cout << "Variable Neighborhood Search:" << endl << "  ";
-    Solution y3 = Algorithm().variableNeighborhoodSearch(p, x);
+    Solution y3 = VariableNeighborhoodSearch().run(p, x);
     y3.print();
 
     // Tabu Search
     cout << "Tabu Search:" << endl << "  ";
-    Solution y4 = Algorithm().tabuSearch(p, x);
+    Solution y4 = TabuSearch().run(p, x);
     y4.print();
 
     // Genetic Algorithm
     cout << "Genetic Algorithm:" << endl << "  ";
-    Solution y5 = Algorithm().geneticAlgorithm(p, 30, 8);
+    Solution y5 = GeneticAlgorithm().run(p, 30, 8);
     y5.print();
 
     return 0;
