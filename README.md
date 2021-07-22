@@ -10,6 +10,7 @@ Thus, the following algorithms are implemented:
 - simulated annealing
 - variable neighborhood search.
 - tabu search
+- genetic algorithm
 
 ## Getting Started
 
@@ -45,6 +46,12 @@ To execute the software, you only need to use the following command:
 
 ```
 bin/tsp data/data.txt
+```
+
+You can also execute only some algorithms with special commands:
+
+```
+bin/tsp --bf --vns --ts data/data.txt
 ```
 
 ### Benchmark
