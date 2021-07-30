@@ -36,6 +36,10 @@ vector<vector<double>> Problem::getData() {
     return m_data;
 }
 
+double Problem::getData(int i, int j) {
+    return m_data.at(i).at(j);
+}
+
 int Problem::getSize() {
     return m_size;
 }

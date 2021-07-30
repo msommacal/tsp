@@ -6,11 +6,12 @@ This project is a collection of optimization algorithms to solve the traveling s
 
 Thus, the following algorithms are implemented:
 
-- local search
-- simulated annealing
-- variable neighborhood search.
-- tabu search
-- genetic algorithm
+- local search (ls)
+- simulated annealing (sa)
+- variable neighborhood search (vns)
+- tabu search (ts)
+- genetic algorithm (ga)
+- ant colony optimization (aco)
 
 ## Getting Started
 

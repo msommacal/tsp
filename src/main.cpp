@@ -10,6 +10,7 @@
 #include "algorithm/VariableNeighborhoodSearch.h"
 #include "algorithm/TabuSearch.h"
 #include "algorithm/GeneticAlgorithm.h"
+#include "algorithm/AntColonyOptimization.h"
 
 using namespace std;
 
@@ -38,7 +39,7 @@ int main(int argc, char** argv) {
     // generate a random solution
     Solution x(p.getSize());
 
-    vector<string> all_methods = {"--bf", "--vns", "--ts", "--sa", "--ga", "--ls"};
+    vector<string> all_methods = {"--bf", "--vns", "--ts", "--sa", "--ga", "--ls", "--aco"};
     vector<string> methods;
     if (argc == 2) {
         methods = all_methods;
@@ -78,6 +79,10 @@ int main(int argc, char** argv) {
             cout << "Tabu Search:" << endl << "  ";
             Solution y4 = TabuSearch().run(p, x);
             y4.print();
+        } else if (methods.at(i).compare("--aco") == 0) {
+            cout << "Ant Colony Optimization:" << endl << "  ";
+            Solution y6 = AntColonyOptimization().run(p, 10);
+            y6.print();
         } else {
             cerr << "Error: " << methods.at(i) << " is not a valid method." << endl;
         }

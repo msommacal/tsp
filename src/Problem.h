@@ -18,6 +18,7 @@ class Problem {
     ~Problem();
 
     std::vector<std::vector<double>> getData();
+    double getData(int i, int j);
     int getSize();
 
     double objective(Solution &x);

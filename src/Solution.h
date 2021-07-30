@@ -29,7 +29,7 @@ class Solution {
     void setEval(double eval);
     int getSize() const;
 
-    void print();
+    void print() const;
 
     bool operator==(const Solution& an) const;
     bool operator!=(const Solution& an) const;
