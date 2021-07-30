@@ -6,29 +6,22 @@
 #include "../Problem.h"
 #include "../Neighborhood.h"
 
-class Ant {
+class Ant : public Solution {
     private:
 
-    std::vector<int> m_path;
     std::vector<int> m_remaining_points;
-    double m_eval;
 
     public:
 
-    Ant(Problem p);
-    ~Ant();
+    Ant();
+    Ant(int size);
 
-    double getEval() const;
     int getPosition() const;
-    std::vector<int> getPath() const;
     std::vector<int> getRemainingPoints() const;
 
-    void evaluate(Problem p);
     void move(int position);
 
     void print() const;
-
-    bool operator<(const Ant& an) const;
 };
 
 class AntColonyOptimization {
@@ -40,8 +33,8 @@ class AntColonyOptimization {
     double m_Q;
 
     std::vector<double> probability(Problem p, Ant ant, std::vector<std::vector<double>> pheromones);
-    void tour(Problem p, Ant& ant, std::vector<std::vector<double>> pheromones);
-    void update(Problem p, Ant ant, std::vector<std::vector<double>>& pheromones);
+    void tour(Problem p, Ant &ant, std::vector<std::vector<double>> pheromones);
+    void update(Ant ant, std::vector<std::vector<double>>& pheromones);
 
     public:
 

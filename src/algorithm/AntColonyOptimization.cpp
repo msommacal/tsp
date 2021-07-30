@@ -67,21 +67,21 @@ vector<double> AntColonyOptimization::probability(Problem p, Ant ant, vector<vec
     return probabilities;
 }
 
-void AntColonyOptimization::update(Problem p, Ant ant, vector<vector<double>>& pheromones) {
-    vector<int> path = ant.getPath();
+void AntColonyOptimization::update(Ant ant, vector<vector<double>>& pheromones) {
+    vector<int> data = ant.getData();
     double d = getQ()/ant.getEval();
     int i,j;
 
-    for (int k=1;k<path.size();k++) {
-        i = path.at(k-1);
-        j = path.at(k);
+    for (int k=1;k<data.size();k++) {
+        i = data.at(k-1);
+        j = data.at(k);
         pheromones.at(i).at(j) += d;
     }
 
-    pheromones.at(path.back()).at(path.at(0)) += d;
+    pheromones.at(data.back()).at(data.at(0)) += d;
 }
 
-void AntColonyOptimization::tour(Problem p, Ant& ant, vector<vector<double>> pheromones) {
+void AntColonyOptimization::tour(Problem p, Ant &ant, vector<vector<double>> pheromones) {
     random_device rd;
     mt19937 eng(rd());
     vector<double> probabilities;
@@ -108,8 +108,7 @@ void AntColonyOptimization::tour(Problem p, Ant& ant, vector<vector<double>> phe
 }
 
 Solution AntColonyOptimization::run(Problem p, int n) {
-    Solution x_optim;
-    Ant a_optim(p);
+    Ant x_optim, a_min;
 
     vector<vector<double>> pheromones = initialization(p);
 
@@ -117,90 +116,72 @@ Solution AntColonyOptimization::run(Problem p, int n) {
 
     for (int k=0;k<10;k++) {
         for (int i=0;i<n;i++) {
-            ants.push_back(Ant(p));
+            ants.push_back(Ant(p.getSize()));
             tour(p, ants.at(i), pheromones);
-            ants.at(i).evaluate(p);
+            p.objective(ants.at(i));
         }
 
         for (int i=0;i<n;i++) {
-            update(p, ants.at(i), pheromones);
+            update(ants.at(i), pheromones);
         }
 
-        Ant a_min = *min_element(ants.begin(), ants.end());
+        a_min = *min_element(ants.begin(), ants.end());
 
-        if (a_optim.getPath().size() == 1 || a_min.getEval() < a_optim.getEval()) {
-            a_optim = a_min;
+        if (x_optim.getSize() == 0 || a_min.getEval() < x_optim.getEval()) {
+            x_optim = a_min;
         }
 
         ants.clear();
     }
 
-    x_optim.setData(a_optim.getPath());
-    x_optim.setEval(a_optim.getEval());
-
     return x_optim;
 }
 
-Ant::Ant(Problem p) {
+Ant::Ant() {
+    m_size = 0;
+    m_eval = numeric_limits<double>::quiet_NaN();
+}
+
+Ant::Ant(int size) {
     random_device rd;
 	mt19937 eng(rd());
-	uniform_int_distribution<int> distr(0,p.getSize()-1);
+	uniform_int_distribution<int> distr(0,size-1);
 
-    for (int i=0;i<p.getSize();i++) {
+    for (int i=0;i<size;i++) {
         m_remaining_points.push_back(i);
     }
 
     move(distr(eng));
 
     m_eval = numeric_limits<double>::quiet_NaN();
+
+    m_size = 0;
 }
 
-Ant::~Ant() {}
-
-double Ant::getEval() const {
-    return m_eval;
+void Ant::move(int position) {
+    m_data.push_back(position);
+    m_remaining_points.erase(remove(m_remaining_points.begin(),m_remaining_points.end(), position), m_remaining_points.end());
+    m_size++;
 }
 
 int Ant::getPosition() const {
-    return m_path.back();
-}
-
-vector<int> Ant::getPath() const {
-    return m_path;
+    return m_data.back();
 }
 
 vector<int> Ant::getRemainingPoints() const {
     return m_remaining_points;
 }
 
-void Ant::evaluate(Problem p) {
-    Solution x(m_path);
-    p.objective(x);
-    m_eval = x.getEval();
-}
-
-void Ant::move(int position) {
-    m_path.push_back(position);
-    m_remaining_points.erase(remove(m_remaining_points.begin(),m_remaining_points.end(), position), m_remaining_points.end());
-}
-
 void Ant::print() const {
-    vector<int> path = getPath();
-    vector<int> remaining_points = getRemainingPoints();
-
     cout << m_eval << "\t";
 
-    for (int i=0;i<path.size();i++) {
-        cout << path.at(i) << " ";
+    for (int i=0;i<m_data.size();i++) {
+        cout << m_data.at(i) << " ";
     }
-    cout << "\t\t";
+    cout << "\t";
 
-    for (int i=0;i<remaining_points.size();i++) {
-        cout << remaining_points.at(i) << " ";
+    for (int i=0;i<m_remaining_points.size();i++) {
+        cout << m_remaining_points.at(i) << " ";
     }
     cout << endl;
-}
-
-bool Ant::operator<(const Ant& an) const {
-    return m_eval < an.m_eval;
 }

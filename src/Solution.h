@@ -8,7 +8,7 @@
 #include <vector>
 
 class Solution {
-    private:
+    protected:
 
     std::vector<int> m_data;
     double m_eval;
