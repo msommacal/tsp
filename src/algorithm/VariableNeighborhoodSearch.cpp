@@ -3,8 +3,9 @@
 #define NB_NEIGHBORHOOD 5
 
 using namespace std;
+using namespace std::placeholders;
 
-Solution VariableNeighborhoodSearch::shaking(Solution x, int k) {
+Solution VariableNeighborhoodSearch::shaking(Solution x, Solution (Neighborhood::*n_neighborhood)(Solution, int, int)) {
     random_device rd;
 	mt19937 eng(rd());
 	uniform_int_distribution<int> distr(0,x.getSize()-1);
@@ -22,17 +23,9 @@ Solution VariableNeighborhoodSearch::shaking(Solution x, int k) {
         a = t;
     }
 
-    if (k == 1) {
-       return Neighborhood().swapMove(x, a, b);
-    } else if (k == 2) {
-       return Neighborhood().inversionMove(x, a, b);
-    } else if (k == 3) {
-       return Neighborhood().backwardInsertionMove(x, a, b);
-    } else if (k == 4) {
-       return Neighborhood().forwardInsertionMove(x, a, b);
-    } else {
-       return Neighborhood().scrambleMove(x, a, b);
-    }
+    auto neighborhood = bind(n_neighborhood, Neighborhood(), _1, _2, _3);
+
+    return neighborhood(x, a, b);
 }
 
 Solution VariableNeighborhoodSearch::run(Problem p, Solution x) {
@@ -41,9 +34,23 @@ Solution VariableNeighborhoodSearch::run(Problem p, Solution x) {
     p.objective(x_optim);
     int k=1;
 
+    Solution (Neighborhood::*neighborhood)(Solution, int, int);
+
     for (int i=0;i<10;i++) {
-        x_neighbor = shaking(x, k);
-        x_neighbor = LocalSearch().run(p, x_neighbor);
+        if (k == 1) {
+            neighborhood = &Neighborhood::swapMove;
+        } else if (k == 2) {
+            neighborhood = &Neighborhood::inversionMove;
+        } else if (k == 3) {
+            neighborhood = &Neighborhood::backwardInsertionMove;
+        } else if (k == 4) {
+            neighborhood = &Neighborhood::forwardInsertionMove;
+        } else {
+            neighborhood = &Neighborhood::scrambleMove;
+        }
+
+        x_neighbor = shaking(x, neighborhood);
+        x_neighbor = LocalSearch().run(p, x_neighbor, neighborhood);
 
         if (x_neighbor.getEval() < x_optim.getEval()) {
             x_optim = x_neighbor;

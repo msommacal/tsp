@@ -38,8 +38,9 @@ int main(int argc, char** argv) {
 
     // generate a random solution
     Solution x(p.getSize());
+    Solution y;
 
-    vector<string> all_methods = {"--bf", "--vns", "--ts", "--sa", "--ga", "--ls", "--aco"};
+    vector<string> all_methods = {"--bf", "--aco", "--ga", "--ls", "--sa", "--ts", "--vns"};
     vector<string> methods;
     if (argc == 2) {
         methods = all_methods;
@@ -59,30 +60,30 @@ int main(int argc, char** argv) {
                 cout << "  ";
                 x_optim.at(i).print();
             }
-        } else if (methods.at(i).compare("--vns") == 0) {
-            cout << "Variable Neighborhood Search:" << endl << "  ";
-            Solution y3 = VariableNeighborhoodSearch().run(p, x);
-            y3.print();
-        } else if (methods.at(i).compare("--ls") == 0) {
-            cout << "Local Search:" << endl << "  ";
-            Solution y1 = LocalSearch().run(p, x);
-            y1.print();
-        } else if (methods.at(i).compare("--sa") == 0) {
-            cout << "Simulated Annealing:" << endl << "  ";
-            Solution y2 = SimulatedAnnealing().run(p, x);
-            y2.print();
-        } else if (methods.at(i).compare("--ga") == 0) {
-            cout << "Genetic Algorithm:" << endl << "  ";
-            Solution y5 = GeneticAlgorithm().run(p, 30, 8);
-            y5.print();
-        } else if (methods.at(i).compare("--ts") == 0) {
-            cout << "Tabu Search:" << endl << "  ";
-            Solution y4 = TabuSearch().run(p, x);
-            y4.print();
         } else if (methods.at(i).compare("--aco") == 0) {
             cout << "Ant Colony Optimization:" << endl << "  ";
-            Solution y6 = AntColonyOptimization().run(p, 10);
-            y6.print();
+            y = AntColonyOptimization().run(p, 10);
+            y.print();
+        } else if (methods.at(i).compare("--ga") == 0) {
+            cout << "Genetic Algorithm:" << endl << "  ";
+            y = GeneticAlgorithm().run(p, 30, 8);
+            y.print();
+        } else if (methods.at(i).compare("--ls") == 0) {
+            cout << "Local Search:" << endl << "  ";
+            y = LocalSearch().run(p, x, &Neighborhood::swapMove);
+            y.print();
+        } else if (methods.at(i).compare("--sa") == 0) {
+            cout << "Simulated Annealing:" << endl << "  ";
+            y = SimulatedAnnealing().run(p, x);
+            y.print();
+        } else if (methods.at(i).compare("--ts") == 0) {
+            cout << "Tabu Search:" << endl << "  ";
+            y = TabuSearch().run(p, x, &Neighborhood::swapMove);
+            y.print();
+        } else if (methods.at(i).compare("--vns") == 0) {
+            cout << "Variable Neighborhood Search:" << endl << "  ";
+            y = VariableNeighborhoodSearch().run(p, x);
+            y.print();
         } else {
             cerr << "Error: " << methods.at(i) << " is not a valid method." << endl;
         }

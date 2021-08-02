@@ -10,7 +10,7 @@ class TabuSearch {
 
     TabuSearch();
 
-    Solution run(Problem p, Solution x);
+    Solution run(Problem p, Solution x, Solution (Neighborhood::*neighborhood)(Solution, int, int));
 };
 
 #endif
