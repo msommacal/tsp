@@ -27,7 +27,7 @@ double AntColonyOptimization::getQ() const {
     return m_Q;
 }
 
-vector<vector<double>> initialization(Problem p) {
+vector<vector<double>> AntColonyOptimization::initialization(Problem p) {
     vector<vector<double>> pheromones;
     vector<double> row;
     for(int i=0;i<p.getSize();i++){

@@ -4,7 +4,6 @@
 #include <algorithm>
 #include <vector>
 #include "../Problem.h"
-#include "../Neighborhood.h"
 
 class Ant : public Solution {
     private:
@@ -32,6 +31,7 @@ class AntColonyOptimization {
     double m_rho;
     double m_Q;
 
+    std::vector<std::vector<double>> initialization(Problem p);
     std::vector<double> probability(Problem p, Ant ant, std::vector<std::vector<double>> pheromones);
     void tour(Problem p, Ant &ant, std::vector<std::vector<double>> pheromones);
     void update(Ant ant, std::vector<std::vector<double>>& pheromones);
