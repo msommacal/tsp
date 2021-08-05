@@ -40,7 +40,7 @@ Solution LocalSearch::run(Problem p, Solution x, Solution (Neighborhood::*n_neig
             x_neighbor = neighborhood(x, a, b);
             p.objective(x_neighbor);
 
-            int i = 0;
+            long unsigned int i = 0;
             while (i < T.size() && (T.at(i) != x_neighbor)) {
                 i++;
             }

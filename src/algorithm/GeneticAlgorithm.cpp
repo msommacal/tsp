@@ -15,7 +15,7 @@ vector<Solution> GeneticAlgorithm::selection(Problem p, vector<Solution> pop, in
     double r;
 
     for (int j=0;j<mu;j++) {
-        for (int i=0;i<population.size();i++) {
+        for (long unsigned int i=0;i<population.size();i++) {
             sum += population.at(i).getEval();
         }
 
@@ -44,7 +44,7 @@ vector<Solution> GeneticAlgorithm::crossover(Problem p, vector<Solution> parents
     vector<Solution> children;
     int r;
 
-    for (int k=0;k<parents.size()/2;k++) {
+    for (long unsigned int k=0;k<parents.size()/2;k++) {
         Solution child1(parents.at(2*k));
         Solution child2(parents.at(2*k+1));
 
@@ -88,7 +88,7 @@ vector<Solution> GeneticAlgorithm::crossover(Problem p, vector<Solution> parents
     return children;
 }
 
-Solution GeneticAlgorithm::run(Problem p, int n, int mu) {
+Solution GeneticAlgorithm::run(Problem p, long unsigned int n, int mu) {
     vector<Solution> population;
 
     for (int k=0;k<10;k++) {

@@ -14,7 +14,7 @@ class GeneticAlgorithm {
 
     GeneticAlgorithm();
 
-    Solution run(Problem p, int n, int mu);
+    Solution run(Problem p, long unsigned int n, int mu);
 };
 
 #endif

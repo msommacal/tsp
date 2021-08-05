@@ -60,7 +60,7 @@ int Solution::getSize() const {
 
 void Solution::print() const {
     cout << m_eval << "\t";
-    for (int i=0; i < m_data.size(); i++) {
+    for (long unsigned int i=0;i<m_data.size();i++) {
         cout << m_data.at(i) << ' ';
     }
     cout << endl;

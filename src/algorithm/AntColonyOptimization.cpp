@@ -53,14 +53,14 @@ vector<double> AntColonyOptimization::probability(Problem p, Ant ant, vector<vec
 
     double d = 0;
 
-    for (int l=0;l<remaining_points.size();l++) {
+    for (long unsigned int l=0;l<remaining_points.size();l++) {
         j = remaining_points[l];
         probabilities.push_back(pow(pheromones.at(i).at(j), getAlpha())
                               * pow(1/p.getData(i,j), getBeta()));
         d += probabilities.back();
     }
 
-    for (int l=0;l<probabilities.size();l++) {
+    for (long unsigned int l=0;l<probabilities.size();l++) {
         probabilities.at(l) /= d;
     }
 
@@ -72,7 +72,7 @@ void AntColonyOptimization::update(Ant ant, vector<vector<double>>& pheromones) 
     double d = getQ()/ant.getEval();
     int i,j;
 
-    for (int k=1;k<data.size();k++) {
+    for (long unsigned int k=1;k<data.size();k++) {
         i = data.at(k-1);
         j = data.at(k);
         pheromones.at(i).at(j) += d;
@@ -175,12 +175,12 @@ vector<int> Ant::getRemainingPoints() const {
 void Ant::print() const {
     cout << m_eval << "\t";
 
-    for (int i=0;i<m_data.size();i++) {
+    for (long unsigned int i=0;i<m_data.size();i++) {
         cout << m_data.at(i) << " ";
     }
     cout << "\t";
 
-    for (int i=0;i<m_remaining_points.size();i++) {
+    for (long unsigned int i=0;i<m_remaining_points.size();i++) {
         cout << m_remaining_points.at(i) << " ";
     }
     cout << endl;

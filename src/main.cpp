@@ -52,11 +52,11 @@ int main(int argc, char** argv) {
         }
     }
 
-    for (int i=0;i<methods.size();i++) {
+    for (long unsigned int i=0;i<methods.size();i++) {
         if (methods.at(i).compare("--bf") == 0) {
             cout << "Bruteforce:" << endl;
             vector<Solution> x_optim = Bruteforce().run(p);
-            for (int i=0;i<x_optim.size();i++) {
+            for (long unsigned int i=0;i<x_optim.size();i++) {
                 cout << "  ";
                 x_optim.at(i).print();
             }
